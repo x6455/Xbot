@@ -9476,7 +9476,23 @@ const startBot = async () => {
     }
 };
 
-// Clean up existing users with undefined adminId
+
+
+// Export as Vercel serverless function
+module.exports = async (req, res) => {
+  try {
+    await bot.handleUpdate(req.body, res);
+  } catch (error) {
+    console.error('Error handling update:', error);
+    res.status(200).send('OK'); // Always acknowledge receipt
+  }
+};
+
+// For development, you can still use polling
+if (process.env.NODE_ENV === 'development') {
+  bot.launch();
+  console.log('Bot is running in development mode');
+}
 
 startBot();
 
