@@ -9475,5 +9475,7 @@ module.exports = (req, res) => {
   return bot.webhookCallback('/api/webhook')(req, res);
 };
 
+module.exports = bot.webhookCallback('/api/webhook');
+
 process.once('SIGINT', () => bot.stop('SIGINT'));
 process.once('SIGTERM', () => bot.stop('SIGTERM'));
