@@ -9470,16 +9470,9 @@ const startBot = async () => {
     try {
         
         
-const express = require('express');
+// --- Webhook Export for Vercel ---
+module.exports = bot.webhookCallback('/api/webhook');
 
-
-const app = express();
-
-// Set webhook endpoint
-app.use(bot.webhookCallback('/api/webhook'));
-
-// Export for Vercel
-module.exports = app;
         console.log('✅ Bot is now live and listening...');
     } catch (error) {
         console.error('❌ Error starting bot:', error);
