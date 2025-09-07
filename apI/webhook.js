@@ -9469,7 +9469,17 @@ bot.action(/^delete_file_(.+)$/, async (ctx) => {
 const startBot = async () => {
     try {
         
-        bot.launch();
+        
+const express = require('express');
+
+
+const app = express();
+
+// Set webhook endpoint
+app.use(bot.webhookCallback('/api/webhook'));
+
+// Export for Vercel
+module.exports = app;
         console.log('✅ Bot is now live and listening...');
     } catch (error) {
         console.error('❌ Error starting bot:', error);
@@ -9477,22 +9487,6 @@ const startBot = async () => {
 };
 
 
-
-// Export as Vercel serverless function
-module.exports = async (req, res) => {
-  try {
-    await bot.handleUpdate(req.body, res);
-  } catch (error) {
-    console.error('Error handling update:', error);
-    res.status(200).send('OK'); // Always acknowledge receipt
-  }
-};
-
-// For development, you can still use polling
-if (process.env.NODE_ENV === 'development') {
-  bot.launch();
-  console.log('Bot is running in development mode');
-}
 
 startBot();
 
