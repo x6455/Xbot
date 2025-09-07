@@ -1,18 +1,15 @@
 {
-  "build": {
-    "env": {
-      "NODE_ENV": "production"
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/bot.js",
+      "use": "@vercel/node"
     }
-  },
-  "functions": {
-    "api/bot.js": {
-      "runtime": "nodejs18.x"
-    }
-  },
+  ],
   "routes": [
     {
-      "src": "./",
-      "dest": "demo.js"
+      "src": "/(.*)",
+      "dest": "/api/bot.js"
     }
   ]
 }
