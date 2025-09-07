@@ -9466,22 +9466,14 @@ bot.action(/^delete_file_(.+)$/, async (ctx) => {
 });
 // --- Launch bot ---
 // Run migration first, then start the bot
-const startBot = async () => {
-    try {
-        
-        
-// --- Webhook Export for Vercel ---
-module.exports = bot.webhookCallback('/api/webhook');
+// --- Vercel webhook export ---
+module.exports = (req, res) => {
+  const { Telegraf } = require('telegraf');
+  const bot = new Telegraf(process.env.BOT_TOKEN);
 
-        console.log('✅ Bot is now live and listening...');
-    } catch (error) {
-        console.error('❌ Error starting bot:', error);
-    }
+  // Reuse your existing bot instance instead of creating a new one
+  return bot.webhookCallback('/api/webhook')(req, res);
 };
-
-
-
-startBot();
 
 process.once('SIGINT', () => bot.stop('SIGINT'));
 process.once('SIGTERM', () => bot.stop('SIGTERM'));
